@@ -1,2 +1,4 @@
 pydantic
 mlx_whisper
+soundfile
+streamlit
