@@ -17,6 +17,7 @@ def run(audio_bytes: bytes) -> str:
     str
         Texto transcrito.
     """
+    # TODO Fazer o pipeline propriamente para o TranscriberAgent
     audio_array = bytes_to_numpy(audio_bytes)
     result = transcribe(audio_array)
 

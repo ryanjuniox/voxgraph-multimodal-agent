@@ -1,21 +1,36 @@
 import streamlit as st
 
+from src.agent.graph import chat
 from src.pipelines.audio_pipeline import run as process_audio
 
 
 def main():
     st.title("VoxGraph - Multimodal Agent")
 
-    audio_value = st.audio_input("Record a voice message")
+    state = {}
+    question = st.chat_input(
+        "Say or record something",
+        accept_audio=True,
+    )
 
-    if audio_value:
-        st.audio(audio_value)
+    if not question:
+        return
 
-        with st.spinner("Transcrevendo..."):
-            text = process_audio(audio_value.getvalue())
+    if question and question.text:
+        with st.chat_message(name="user"):
+            st.write(question.text)
+        state["request_type"] = "text"
+        state["question"] = question.text
+    else:
+        with st.chat_message(name="user"):
+            st.audio(question.audio)
+        state["question"] = process_audio(question.audio.getvalue())
+        state["request_type"] = "audio"
+        state["audio_bytes"] = question.audio.getvalue()
 
-        st.subheader("Transcrição")
-        st.write(text)
+    with st.chat_message(name="ai"):
+        response = chat.invoke(state)
+        st.write(response["answer"])
 
 
 main()

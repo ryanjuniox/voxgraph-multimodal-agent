@@ -21,6 +21,6 @@ class AnswerGenerator:
         return response.output
 
     def answer_generator(self, state: dict) -> dict:
-        question = state["question"]
+        question = state.question
         answer = self._run(question)
         return {"answer": answer}

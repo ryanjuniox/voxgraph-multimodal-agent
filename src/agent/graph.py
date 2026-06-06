@@ -21,4 +21,4 @@ graph.add_conditional_edges(
 graph.add_edge("transcriber", "answer_generator")
 graph.add_edge("answer_generator", END)
 
-app = graph.compile()
+chat = graph.compile()
