@@ -1,4 +1,7 @@
-pydantic
+langgraph
 mlx_whisper
+numpy
+pydantic
+pydantic-ai
 soundfile
 streamlit
