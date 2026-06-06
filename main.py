@@ -1,7 +1,6 @@
 import streamlit as st
 
 from src.agent.graph import chat
-from src.pipelines.audio_pipeline import run as process_audio
 
 
 def main():
@@ -24,8 +23,8 @@ def main():
     else:
         with st.chat_message(name="user"):
             st.audio(question.audio)
-        state["question"] = process_audio(question.audio.getvalue())
         state["request_type"] = "audio"
+        state["question"] = ""
         state["audio_bytes"] = question.audio.getvalue()
 
     with st.chat_message(name="ai"):
