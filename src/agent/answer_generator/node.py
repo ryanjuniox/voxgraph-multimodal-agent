@@ -1,26 +1,20 @@
-from pydantic_ai import Agent
-from pydantic_ai.models.ollama import OllamaModel
-from pydantic_ai.providers.ollama import OllamaProvider
-
+from src.agent.agent_builder import build_agent
 from src.utils.logger import logging
-from src.utils.constants import OLLAMA_BASE_URL, MODEL_ANSWER_GENERATOR
+from src.utils.constants import MODEL_ANSWER_GENERATOR
 from .prompt import PROMPT_ANSWER_GENERATOR
 
 
 class AnswerGenerator:
     def __init__(self):
-        self.model = OllamaModel(
-            MODEL_ANSWER_GENERATOR, provider=OllamaProvider(base_url=OLLAMA_BASE_URL)
+        self.agent = build_agent(
+            model_name=MODEL_ANSWER_GENERATOR, prompt=PROMPT_ANSWER_GENERATOR
         )
 
     def _run(self, question: str):
         logging.info("Running answer generator agent for question: %s", question)
-        agent = Agent(
-            self.model, system_prompt=PROMPT_ANSWER_GENERATOR, output_type=str
-        )
 
         try:
-            response = agent.run_sync(question)
+            response = self.agent.run_sync(question)
             logging.info("Answer generated successfully")
         except Exception as e:
             logging.error("Error running answer generator agent: %s", str(e))
