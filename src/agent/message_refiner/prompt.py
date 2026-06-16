@@ -12,12 +12,6 @@ INSTRUÇÕES OBRIGATÓRIAS:
 """
 
 
-PROMPT_TRANSCRIBER_AUDIO = """
-O áudio já está carregado em memória. Use a ferramenta `speech_to_text` agora para transcrevê-lo.
-Depois, corrija e reformule o texto resultante.
-"""
-
-
 PROMPT_TRANSCRIBER_TEXT = """
 Corrija e reformule o seguinte texto:
 

@@ -10,7 +10,7 @@ class AnswerGenerator:
             model_name=MODEL_ANSWER_GENERATOR, prompt=PROMPT_ANSWER_GENERATOR
         )
 
-    def _run(self, question: str):
+    def run(self, question: str):
         logging.info("Running answer generator agent for question: %s", question)
 
         try:
@@ -24,6 +24,6 @@ class AnswerGenerator:
     def answer_generator(self, state: dict) -> dict:
         question = state.question
         logging.info("Answer generator node started | Question: %s", question)
-        answer = self._run(question)
+        answer = self.run(question)
         logging.info("Answer generator node completed")
         return {"answer": answer}

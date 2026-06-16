@@ -4,10 +4,10 @@ Agente multimodal que aceita entrada de texto ou áudio e responde perguntas em 
 
 ## Como funciona
 
-O projeto usa um grafo (LangGraph) com roteamento condicional:
+O projeto usa um grafo (LangGraph) com fluxo sequencial:
 
-- **Texto** → vai direto para o agente de respostas.
-- **Áudio** → passa pelo agente transcritor (que converte áudio em texto e corrige erros fonéticos) e depois segue para o agente de respostas.
+1. **Message Refiner** — recebe a entrada do usuário. Se for áudio, transcreve para texto. Em seguida, refina a mensagem (corrige erros ortográficos/fonéticos) usando um agente LLM.
+2. **Answer Generator** — recebe a mensagem refinada e gera a resposta final.
 
 ## Tecnologias
 
@@ -25,10 +25,8 @@ src/
 │   ├── graph.py                # Definição do grafo
 │   ├── state.py                # Estado compartilhado (RequestState)
 │   ├── answer_generator/       # Agente que gera respostas
-│   └── transcriber/            # Agente que transcreve e corrige áudio
-├── tools/                      # Tools usadas pelos agentes
+│   └── message_refiner/        # Agente que transcreve áudio e refina mensagens
 ├── services/                   # Serviços (Whisper local)
-├── routers/                    # Router condicional (audio/text)
 └── utils/                      # Constantes, logger, utilitários
 ```
 
